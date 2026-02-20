@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -10,38 +9,14 @@
   --background: #ffffff;
   --foreground: #171717;
 }
-/* Optional: System preference fallback */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --background: #020617;
-    --foreground: #f8fafc;
-  }
-}
 
 .dark {
-  --background: #020617; /* slate-950 */
-  --foreground: #f8fafc; /* slate-50 */
+  --background: #020617;
+  --foreground: #f8fafc;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   transition: background-color 0.3s ease;
-}
-/* Minimalist scrollbar for calendar cells */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #e2e8f0; /* slate-200 */
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #cbd5e1; /* slate-300 */
 }

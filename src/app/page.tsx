@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
+import Footer from '@/components/footer';
 import { 
   Calculator, Calendar as CalendarIcon, ChevronLeft, ChevronRight, 
   BookOpen, Star, Clipboard, Coffee, GraduationCap, Moon, Sun
@@ -26,7 +27,7 @@ const EventIcon = ({ type }: { type: string }) => {
 
 export default function UTHMTakwim() {
   const [currentDate, setCurrentDate] = useState(new Date(2026, 2, 1)); 
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   // Crucial for Dark Mode toggle to work without errors
@@ -59,15 +60,15 @@ export default function UTHMTakwim() {
         </div>
         
         <div className="flex items-center gap-3">
-          {/* Dark Mode Toggle */}
+          {/* Dark Mode Toggle 
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            onClick={() =>setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 hover:scale-105 transition-all"
             aria-label="Toggle Dark Mode"
           >
-            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            {resolvedTheme === 'dark' ? <Sun /> : <Moon />}
           </button>
-          
+          */}
           <Link href="/calculator" className="flex items-center gap-2 bg-slate-900 dark:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-90 transition-all shadow-lg shadow-blue-900/10">
             <Calculator className="w-4 h-4" />
             <span>GPA Calculator</span>
@@ -141,11 +142,11 @@ export default function UTHMTakwim() {
           <aside className="lg:col-span-3 space-y-6">
             <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-wider text-xs px-2">Timeline</h3>
             <div className="space-y-4">
-              {academicEvents.slice(0, 6).map((event, idx) => (
+              {academicEvents.slice(0,).map((event, idx) => (
                 <div key={idx} className={`p-5 rounded-[1.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm`}>
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-[10px] font-black text-slate-400 uppercase">
-                      {format(parseISO(event.start), 'MMM dd')}
+                      {format(parseISO(event.start), 'MMM dd') } - {format(parseISO(event.end), 'MMM dd, yyyy')}
                     </span>
                     <EventIcon type={event.type} />
                   </div>
@@ -156,6 +157,7 @@ export default function UTHMTakwim() {
           </aside>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

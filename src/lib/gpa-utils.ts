@@ -2,10 +2,8 @@ export interface Course {
   id: string;
   name: string;
   credits: number;
-  continuousScore: number; // e.g. 80/100
-  continuousWeight: number; // e.g. 60%
-  finalScore: number; // e.g. 70/100
-  finalWeight: number; // e.g. 40%
+  continuousScore: number; // e.g., 55.5%
+  finalScore: number;      // e.g., 30%
 }
 
 export const calculatePointValue = (totalMark: number): number => {
@@ -37,4 +35,27 @@ export const calculatePointValue = (totalMark: number): number => {
   if (mark >= 40) return 1.00 + (mark - 40) * 0.10; // D
 
   return 0.00; // E
+};
+
+
+export const gradeToPercent = (input: string | number): number => {
+  if (typeof input === 'number') return input;
+
+  switch (String(input).toUpperCase().trim()) {
+    case "A+": return 95;
+    case "A":  return 90;
+    case "A-": return 85;
+    case "B+": return 80;
+    case "B":  return 75;
+    case "B-": return 70;
+    case "C+": return 65;
+    case "C":  return 60;
+    case "C-": return 55;
+    case "D":  return 50;
+    case "E":  return 40;
+    default:
+      // Try parsing number if user entered a numeric string
+      const n = parseFloat(String(input));
+      return isNaN(n) ? 0 : n;
+  }
 };
