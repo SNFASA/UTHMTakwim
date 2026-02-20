@@ -1,63 +1,159 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useTheme } from 'next-themes';
+import { 
+  Calculator, Calendar as CalendarIcon, ChevronLeft, ChevronRight, 
+  BookOpen, Star, Clipboard, Coffee, GraduationCap, Moon, Sun
+} from 'lucide-react';
+import { academicEvents, semesterInfo } from '@/data/events';
+import { 
+  format, addMonths, subMonths, startOfMonth, endOfMonth, 
+  startOfWeek, endOfWeek, eachDayOfInterval, isSameDay, isWithinInterval, parseISO 
+} from 'date-fns';
+
+const EventIcon = ({ type }: { type: string }) => {
+  const icons: Record<string, React.ReactNode> = {
+    lecture: <BookOpen className="w-3.5 h-3.5" />,
+    holiday: <Star className="w-3.5 h-3.5" />,
+    admin: <Clipboard className="w-3.5 h-3.5" />,
+    break: <Coffee className="w-3.5 h-3.5" />,
+    exam: <GraduationCap className="w-3.5 h-3.5" />,
+  };
+  return icons[type] || null;
+};
+
+export default function UTHMTakwim() {
+  const [currentDate, setCurrentDate] = useState(new Date(2026, 2, 1)); 
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Crucial for Dark Mode toggle to work without errors
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div className="min-h-screen bg-white" />;
+
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = endOfMonth(monthStart);
+  const calendarDays = eachDayOfInterval({ 
+    start: startOfWeek(monthStart), 
+    end: endOfWeek(monthEnd) 
+  });
+
+  const nextMonth = () => setCurrentDate(addMonths(currentDate, 1));
+  const prevMonth = () => setCurrentDate(subMonths(currentDate, 1));
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      {/* Modern Glassmorphism Navbar */}
+      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <div className="bg-gradient-to-br from-yellow-400 to-orange-400 p-2 rounded-xl shadow-lg">
+            <CalendarIcon className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-black tracking-tight dark:text-white">UTHM Takwim</h1>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Student Portal</p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        
+        <div className="flex items-center gap-3">
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 hover:scale-105 transition-all"
+            aria-label="Toggle Dark Mode"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+          
+          <Link href="/calculator" className="flex items-center gap-2 bg-slate-900 dark:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-90 transition-all shadow-lg shadow-blue-900/10">
+            <Calculator className="w-4 h-4" />
+            <span>GPA Calculator</span>
+          </Link>
+        </div>
+      </nav>
+
+      <main className="max-w-7xl mx-auto p-6 md:p-10">
+        <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-1">
+            <span className="text-blue-600 dark:text-blue-400 font-bold text-sm tracking-widest uppercase">{semesterInfo.session} Session</span>
+            <h2 className="text-4xl font-black tracking-tight">{semesterInfo.name}</h2>
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-medium">
+               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+               {semesterInfo.duration} Academic Period
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-1.5 shadow-sm">
+            <button onClick={prevMonth} aria-label="Previous Month" title="Previous Month" className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors">
+              <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400"/>
+            </button>
+            <span className="px-6 font-bold min-w-[160px] text-center">
+              {format(currentDate, 'MMMM yyyy')}
+            </span>
+            <button onClick={nextMonth} aria-label="Next Month" title="Next Month" className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors">
+              <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400"/>
+            </button>
+          </div>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Main Calendar Card */}
+          <div className="lg:col-span-9 bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden">
+            <div className="grid grid-cols-7 bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                <div key={day} className="py-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">{day}</div>
+              ))}
+            </div>
+            
+            <div className="grid grid-cols-7 auto-rows-[120px] md:auto-rows-[160px]">
+              {calendarDays.map((day, i) => {
+                const dayEvents = academicEvents.filter(event => 
+                  isWithinInterval(day, { start: parseISO(event.start), end: parseISO(event.end) })
+                );
+
+                const isCurrentMonth = isSameDay(startOfMonth(day), monthStart);
+
+                return (
+                  <div key={i} className={`border-r border-b border-slate-50 dark:border-slate-800 p-2 flex flex-col ${!isCurrentMonth ? 'opacity-20' : ''}`}>
+                    <span className={`text-xs font-bold mb-2 ${isSameDay(day, new Date()) ? 'bg-blue-600 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-lg shadow-blue-200' : 'text-slate-400'}`}>
+                      {format(day, 'd')}
+                    </span>
+
+                    <div className="flex-1 overflow-y-auto space-y-1.5 custom-scrollbar pr-1">
+                      {dayEvents.map((event, idx) => (
+                        <div key={idx} className={`${event.color} text-[10px] p-2 rounded-lg font-bold flex items-start gap-1.5 leading-tight shadow-sm border border-black/5`}>
+                          <div className="mt-0.5 flex-shrink-0"><EventIcon type={event.type} /></div>
+                          {/* WHITE-SPACE-NORMAL ensures full word wrapping */}
+                          <span className="whitespace-normal break-words">{event.title}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Sidebar Section */}
+          <aside className="lg:col-span-3 space-y-6">
+            <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-wider text-xs px-2">Timeline</h3>
+            <div className="space-y-4">
+              {academicEvents.slice(0, 6).map((event, idx) => (
+                <div key={idx} className={`p-5 rounded-[1.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm`}>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-[10px] font-black text-slate-400 uppercase">
+                      {format(parseISO(event.start), 'MMM dd')}
+                    </span>
+                    <EventIcon type={event.type} />
+                  </div>
+                  <h4 className="font-bold text-slate-800 dark:text-slate-200 text-sm leading-tight">{event.title}</h4>
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
       </main>
     </div>
