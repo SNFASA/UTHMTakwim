@@ -1,6 +1,6 @@
+import './globals.css'
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
@@ -14,16 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UTHM Takwin",
-  description: "A comprehensive calendar and GPA calculator for UTHM students, featuring academic events, target mark calculations, and CPA integration.",
+  title: "UTHM Takwim",
+  description: "A comprehensive calendar and GPA calculator for UTHM students.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
-      {/* Add suppressHydrationWarning here too */}
-      <body suppressHydrationWarning> 
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>
