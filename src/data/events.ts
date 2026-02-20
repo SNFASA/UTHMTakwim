@@ -24,6 +24,7 @@ export interface AcademicEvent {
 export const academicEvents: AcademicEvent[] = [
   { title: "Course Registration", start: "2026-03-12", end: "2026-03-13", type: "admin", color: "bg-blue-100 text-blue-700", date: "12 - 13 March" },
   { title: "Lecture Part 1 (W1-W7)", start: "2026-03-16", end: "2026-05-03", type: "lecture", color: "bg-yellow-100 text-yellow-700", date: "16 March - 03 May" },
+  { title: "ONLINE MODE", start: "2026-03-16", end: "2026-03-29", type: "lecture", color: "bg-blue-100 text-blue-700", date: "16 March - 29 March" },
   { title: "Eid al-Fitr", start: "2026-03-20", end: "2026-03-21", type: "holiday", color: "bg-red-100 text-red-700", date: "20 - 21 March" },
   { title: "Sultan of Johor's Birthday", start: "2026-03-23", end: "2026-03-23", type: "holiday", color: "bg-red-100 text-red-700", date: "23 March" },
   { title: "Labour Day", start: "2026-05-01", end: "2026-05-01", type: "holiday", color: "bg-red-100 text-red-700", date: "01 May" },
