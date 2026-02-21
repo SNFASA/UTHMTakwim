@@ -1,12 +1,38 @@
-<<<<<<< HEAD
-# UTHMTakwim
-UTHMTakwim and GPA calculator
-=======
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UTHM Takwim & CPA / GPA Calculator
 
-## Getting Started
+A web application built with **Next.js** to help Universiti Tun Hussein Onn Malaysia (UTHM) students:
 
-First, run the development server:
+- 📅 View the **UTHM Academic Takwim**
+- 📊 Calculate **GPA** and **CPA**
+- 🎓 Plan semesters more effectively
+
+---
+
+## 🚀 Tech Stack
+
+- **Next.js** (App Router)
+- **React**
+- **TypeScript**
+- **Tailwind CSS** (if used)
+- **Node.js**
+
+---
+
+## 🛠 Getting Started
+
+First, install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -18,24 +44,118 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+app/page.tsx
+```
 
-## Learn More
+The page auto-updates as you edit.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧮 GPA & CPA Calculator
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Features include:
 
-## Deploy on Vercel
+- Input course credit hours and grades
+- Automatic GPA calculation per semester
+- CPA calculation across multiple semesters
+- Real-time updates
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> Formula used:
+>
+> **GPA = Total Quality Points / Total Credit Hours**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
->>>>>>> f6e57de (init)
+---
+
+## 📅 UTHM Takwim
+
+- Displays official UTHM academic calendar
+- Semester start & end dates
+- Examination weeks
+- Public & university holidays
+
+---
+
+## 🤝 Contributing (Pull Request Guide)
+
+Contributions are welcome! Follow the steps below to submit a pull request.
+
+### 1️⃣ Fork the Repository
+
+Click the **Fork** button at the top right of this repository.
+
+---
+
+### 2️⃣ Clone Your Fork
+
+```bash
+git clone https://github.com/your-username/UTHMTakwim.git
+cd UTHMTakwim
+```
+
+---
+
+### 3️⃣ Create a New Branch
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+---
+
+### 4️⃣ Make Your Changes
+
+Edit the code, then commit your changes:
+
+```bash
+git add .
+git commit -m "Add: GPA calculation logic"
+```
+
+---
+
+### 5️⃣ Push to Your Fork
+
+```bash
+git push origin feature/your-feature-name
+```
+
+---
+
+### 6️⃣ Open a Pull Request
+
+- Go to the original repository
+- Click **Compare & pull request**
+- Write a clear title and description
+- Submit the pull request 🎉
+
+---
+
+## 📚 Learn More
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn)
+
+---
+
+## 🚀 Deployment
+
+The easiest way to deploy this application is using **Vercel**.
+
+```bash
+npm run build
+```
+
+For more details, see:
+
+- https://nextjs.org/docs/app/building-your-application/deploying
+
+---
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**.
